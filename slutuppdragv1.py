@@ -1,11 +1,12 @@
 import os
-import csv
+import json
 
 #klass fr bussen Bussen 
 class buss:
-    print("Välkommen till bussen by Johan")
-    passangers=[]
+    passangers=dict()
     quantity=0
+    with open ('data.json' ) as f:
+        id=json.load(f)
 
     #Clear för att rensa konsolen.
     def clear(self):
@@ -14,6 +15,7 @@ class buss:
     #användar menyn
     def menu(self):
         while True:
+            b.clear()
             print("************************")
             print("*********Bussen*********")
             print("************************")
@@ -48,22 +50,26 @@ class buss:
 
     #Skapa passagerare.
     def add_passanger(self):
+        b.clear()
         try:
             firstname=str(input("Vilket förnamn har passageraren? "))
             lastname=str(input("Vilktet efternamn har passageraren? "))
-            age=int(input("Hur gammal är ", firstname, " ? "))
+            age=int(input("Hur gammal är passageraren? "))
             logweight=int(input("Hur mycket väger bagaget? "))
 
-            if b.quantity <= 25:
-                b.passangers.insert
+            if b.quantity <= 25 or b.id <=25:
+                b.passangers.update({b.id: {'Firstname':firstname, 'Lastname':lastname, 'Age':age, 'Bagagevikt':logweight,}})
                 b.quantity += 1
-
+                b.id += 1
+                with open ('data.json', 'a', encoding='utf-8') as json_file:
+                    json.dump(b.passangers, json_file, indent=4)
             else:
-                input("Bussen är full!")
+                print("Bussen är full!")
 
         except:
             b.clear()
-            input("Felaktig inmatning")
+            print("Felaktig inmatning")
+            self.add_passanger()
 
 
     #skriv ut alla passagerare
@@ -71,8 +77,12 @@ class buss:
         pass
 
     #Se total ålder eller medel ålder
+    def total_age(self):
+        pass
 
     #Se total vikt av bagage (annan fil?)
+    def total_weight(self):
+        pass
 
 #Call emot klassen och menyn.
 b = buss()
