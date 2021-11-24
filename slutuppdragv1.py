@@ -5,8 +5,8 @@ import json
 class buss:
     passangers=dict()
     quantity=0
-    with open ('data.json' ) as f:
-        id=json.load(f)
+    id=0
+    filecreate=False
 
     #Clear för att rensa konsolen.
     def clear(self):
@@ -51,18 +51,19 @@ class buss:
     #Skapa passagerare.
     def add_passanger(self):
         b.clear()
+
         try:
             firstname=str(input("Vilket förnamn har passageraren? "))
             lastname=str(input("Vilktet efternamn har passageraren? "))
             age=int(input("Hur gammal är passageraren? "))
             logweight=int(input("Hur mycket väger bagaget? "))
 
-            if b.quantity <= 25 or b.id <=25:
-                b.passangers.update({b.id: {'Firstname':firstname, 'Lastname':lastname, 'Age':age, 'Bagagevikt':logweight,}})
+            if b.quantity <= 25:
+                b.filecreate=True
                 b.quantity += 1
                 b.id += 1
-                with open ('data.json', 'a', encoding='utf-8') as json_file:
-                    json.dump(b.passangers, json_file, indent=4)
+                b.passangers.update({'ID':b.id, 'Firstname':firstname, 'Lastname':lastname, 'Age':age, 'Bagagevikt':logweight,})
+
             else:
                 print("Bussen är full!")
 
@@ -71,10 +72,19 @@ class buss:
             print("Felaktig inmatning")
             self.add_passanger()
 
+    def json_create(self):
+        while True:
+            print("creating json object!")
+            if b.filecreate==True:
+
+            try:
+                with open("data.json" "w") as json_file:
+                    json.dumps(b.passangers, json_file, indent="4")
 
     #skriv ut alla passagerare
     def showbuss(self):
-        pass
+        input("all data")
+        
 
     #Se total ålder eller medel ålder
     def total_age(self):
